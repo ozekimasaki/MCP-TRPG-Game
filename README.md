@@ -30,7 +30,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 - CSV seed data for easy import
 - Modular service architecture
 - Instant game start: Just type "I want to start playing TRPG"
-- Language: Traditional Chinese (zh-TW), i18n planned
+- Language: Japanese player-facing narration is supported via prompt/tool localization. Seed data remains Traditional Chinese (zh-TW).
 
 ## Getting Started
 
@@ -132,6 +132,17 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 
 4. **Default Database**
 	 - Uses SQLite (`trpg.db`) by default. The database is auto-created on first run.
+
+### Language Configuration
+Set the default player-facing language in `appsettings.Local.json`:
+
+```json
+"Localization": {
+  "DefaultLanguage": "ja-JP"
+}
+```
+
+Use `ja-JP` for Japanese narration. If you want to revert later, you can change it to `zh-TW`.
 
 5. **API Testing**
 	 - Use `MCPTRPGGame.http` for sample API requests and testing.

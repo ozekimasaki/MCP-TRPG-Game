@@ -14,8 +14,10 @@ using Game.Service.Interface;
 using Game.Service.Services;
 using Common.Interface;
 using Common.Services;
+using Common.Localization;
 using ToolBox.Tools;
 using ToolBox.Middleware;
+using ToolBox.Tools.GamePrompt;
 
 // Decide mode by command-line: pass --stdio to run stdio transport, otherwise http
 var mode = args.Contains("--stdio") ? "stdio" : "http";
@@ -79,6 +81,10 @@ static void RegisterCommonServices(IServiceCollection services, IConfiguration c
 	services.AddDbContext<TrpgDbContext>(options =>
 		options.UseSqlite(connectionString));
 
+	services.AddSingleton(new GameLanguageOptions
+	{
+		DefaultLanguage = configuration["Localization:DefaultLanguage"] ?? "ja-JP"
+	});
 
 	services.AddScoped<DbContext>(sp => sp.GetRequiredService<TrpgDbContext>());
 
@@ -92,6 +98,7 @@ static void RegisterCommonServices(IServiceCollection services, IConfiguration c
 static void InitializeAndSeed(IServiceProvider services)
 {
 	TrpgTools.Initialize(services);
+	TrpgPrompt.Initialize(services);
 
 	using (var scope = services.CreateScope())
 	{
